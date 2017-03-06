@@ -46,14 +46,26 @@ I've noticed that the accuracy for a given training batch is always higher than 
 I've also made a shuffle in the training set, because the signs are ordered by label; so without shuffling every batch would have a lot of similar signs.
 
 
-# Acquiring New Image
-I've got the sample images from the dataset itself.
+# Acquiring New Images
+I've got new images from the web. The challange with these images is that they are not neccessarily normalized the same way as the training images, so it is not guaranteed that the sign is on the center of the image, and the color scale might be different. That's why the model performes significantly poorer.
 
 
 # Performance on New Images
-I've made a performance test both on validation data and on test data; the model performes similarly.
+I've made a performance test both on validation data and on test data; the model performes similarly. However, on the new images there are very bad results; I think this is happening because the dataset was normalized.
 
 # Model Certainty - Softmax Probabilities
 When analyzing the probabilities it shows that that 2nd and 3rd most likely predictions are usually similar to the first one (for example, speed limit signs are ususally confused with other speed limit signs). This makes sense, as these signs are similar.
+
+I'm NOT using a softmax probabilities when printing out the probabilities, because the results are very high, so a softmax function would reset out every field (and kept only the one with the highest probability). Instead, I'm simply shoving the probabilies from the logit model.
+It shows that the probabilities are very close to each other, so the model is pretty uncertain.
+
+```
+1    Go straight or right 38%, Go straight or left 34%, Keep left 26%, 
+2    Vehicles over 3.5 metric tons prohibited 38%, Children crossing 30%, Road narrows on the right 30%, 
+3    End of speed limit (80km/h) 36%, Bicycles crossing 32%, Priority road 31%, 
+```
+
+
+
 
 
